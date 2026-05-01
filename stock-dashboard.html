@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOP PERFORMERS — Stock Dashboard 2026</title>
+  <style>
+    :root {
+      --bg:        #000000;
+      --bg2:       #0a0a0a;
+      --bg3:       #111111;
+      --bg4:       #1a1a1a;
+      --border:    #222222;
+      --green:     #00ff88;
+      --green2:    #00cc66;
+      --green3:    #004422;
+      --red:       #ff3355;
+      --red2:      #cc2244;
+      --red3:      #3a0011;
+      --yellow:    #ffd700;
+      --orange:    #ff8800;
+      --blue:      #00aaff;
+      --purple:    #aa66ff;
+      --white:     #ffffff;
+      --gray:      #888888;
+      --gray2:     #555555;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Courier New', 'Consolas', monospace;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--green);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 38px; height: 38px;
+      border: 2px solid var(--green);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .logo-text { font-size: 20px; font-weight: 700; letter-spacing: 3px; color: var(--green); }
+    .logo-sub  { font-size: 11px; color: var(--gray); letter-spacing: 2px; margin-top: 2px; }
+
+    .header-meta {
+      text-align: right;
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    .header-meta span { color: var(--green); font-weight: 700; }
+
+    /* ── TICKER TAPE ── */
+    .ticker-wrap {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 6px 0;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 60s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      margin: 0 28px;
+      font-size: 12px;
+    }
+
+    .ticker-item .sym { color: var(--white); font-weight: 700; }
+    .ticker-item .up  { color: var(--green); }
+    .ticker-item .dn  { color: var(--red); }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-box {
+      flex: 1;
+      background: var(--bg3);
+      padding: 14px 20px;
+      text-align: center;
+    }
+
+    .stat-label { font-size: 10px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+    .stat-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    .stat-value.green  { color: var(--green); }
+    .stat-value.red    { color: var(--red); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.blue   { color: var(--blue); }
+    .stat-value.purple { color: var(--purple); }
+
+    /* ── CONTROLS ── */
+    .controls {
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .controls-label { font-size: 11px; color: var(--gray); letter-spacing: 2px; }
+
+    .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .btn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--gray);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: inherit;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all .15s;
+      text-transform: uppercase;
+    }
+
+    .btn:hover, .btn.active {
+      background: var(--green3);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .btn.active-red {
+      background: var(--red3);
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .sort-select {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 6px 10px;
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 2px;
+      margin-left: auto;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      padding: 0;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--bg2);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: background .15s;
+      position: relative;
+      border-left: 3px solid transparent;
+    }
+
+    .card:hover { background: var(--bg3); }
+    .card.us-market   { border-left-color: var(--green); }
+    .card.eu-market   { border-left-color: var(--blue); }
+    .card.em-market   { border-left-color: var(--yellow); }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-ticker { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: 1px; }
+    .card-name   { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+    .card-price-block { text-align: right; }
+    .card-price { font-size: 20px; font-weight: 700; color: var(--white); }
+    .card-change { font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .card-change.up { color: var(--green); }
+    .card-change.dn { color: var(--red); }
+
+    .card-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      font-size: 9px;
+      padding: 3px 7px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-sector   { background: #0d1f2d; color: var(--blue); border: 1px solid #1a4060; }
+    .badge-market   { background: #0d1f0d; color: var(--green2); border: 1px solid #1a4020; }
+    .badge-market.eu { background: #0d1430; color: var(--blue); border: 1px solid #1a2660; }
+    .badge-market.em { background: #2d2000; color: var(--yellow); border: 1px solid #604500; }
+
+    /* ── RISK BAR ── */
+    .risk-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .risk-label { font-size: 10px; color: var(--gray); letter-spacing: 1px; width: 36px; flex-shrink: 0; }
+    .risk-bar-outer {
+      flex: 1;
+      height: 6px;
+      background: var(--bg4);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .risk-bar-inner { height: 100%; border-radius: 3px; }
+    .risk-val { font-size: 12px; font-weight: 700; width: 32px; text-align: right; }
+
+    .potential-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .potential-label { font-size: 10px; color: var(--gray); letter-spacing: 1px; width: 36px; flex-shrink: 0; }
+    .pot-bar-outer {
+      flex: 1;
+      height: 6px;
+      background: var(--bg4);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .pot-bar-inner { height: 100%; border-radius: 3px; background: var(--green); }
+    .pot-val { font-size: 12px; font-weight: 700; color: var(--green); width: 40px; text-align: right; }
+
+    /* ── METRICS GRID ── */
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      background: var(--bg4);
+      padding: 7px 10px;
+      border-radius: 2px;
+    }
+
+    .metric-label { font-size: 9px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+    .metric-value { font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .metric-value.green  { color: var(--green); }
+    .metric-value.yellow { color: var(--yellow); }
+    .metric-value.orange { color: var(--orange); }
+    .metric-value.red    { color: var(--red); }
+    .metric-value.white  { color: var(--white); }
+    .metric-value.blue   { color: var(--blue); }
+
+    .catalyst {
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    .catalyst strong { color: var(--green); }
+
+    /* ── TARGET BLOCK ── */
+    .target-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 8px 10px;
+      background: var(--green3);
+      border: 1px solid #006633;
+      border-radius: 2px;
+    }
+
+    .target-label  { font-size: 10px; color: var(--gray); letter-spacing: 1px; }
+    .target-price  { font-size: 15px; font-weight: 900; color: var(--green); }
+    .target-upside { font-size: 13px; font-weight: 700; color: var(--yellow); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--green);
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: none;
+      border: 1px solid var(--red);
+      color: var(--red);
+      width: 28px; height: 28px;
+      font-size: 16px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .modal-ticker { font-size: 36px; font-weight: 900; color: var(--green); }
+    .modal-name   { font-size: 14px; color: var(--gray); margin-bottom: 20px; }
+
+    .modal-section-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin: 18px 0 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5px;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .modal-metric {
+      background: var(--bg4);
+      padding: 10px 14px;
+    }
+    .modal-metric-label { font-size: 9px; color: var(--gray); letter-spacing: 1px; }
+    .modal-metric-value { font-size: 16px; font-weight: 700; margin-top: 4px; }
+
+    .modal-text {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    .proj-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .proj-table th {
+      background: var(--bg4);
+      color: var(--gray);
+      padding: 7px 10px;
+      text-align: left;
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 10px;
+    }
+    .proj-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-table tr:hover td { background: var(--bg3); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      padding: 18px 28px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--gray);
+      line-height: 2;
+    }
+    footer strong { color: var(--red); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-wrap: wrap; }
+      .stat-box { min-width: 50%; }
+      header { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">$</div>
+    <div>
+      <div class="logo-text">TOP PERFORMERS</div>
+      <div class="logo-sub">STOCK DASHBOARD · HIGH GROWTH · HIGH RISK</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div>Mise à jour : <span id="clock">--:--:--</span></div>
+    <div>Date : <span>01 MAI 2026</span></div>
+    <div>Stocks sélectionnés : <span>25</span> &nbsp;|&nbsp; Marchés : <span>US · EU · EM</span></div>
+  </div>
+</header>
+
+<!-- TICKER TAPE -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="tape"></div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-box">
+    <div class="stat-label">Actions analysées</div>
+    <div class="stat-value green">25</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Upside moyen</div>
+    <div class="stat-value yellow">+187%</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Risque moyen</div>
+    <div class="stat-value red">8.2 / 10</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Croissance moy.</div>
+    <div class="stat-value green">+612%</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Marchés couverts</div>
+    <div class="stat-value blue">3</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Secteurs</div>
+    <div class="stat-value purple">7</div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <span class="controls-label">MARCHÉ :</span>
+  <div class="btn-group" id="market-filters">
+    <button class="btn active" data-filter="all">Tous</button>
+    <button class="btn" data-filter="US">🇺🇸 US</button>
+    <button class="btn" data-filter="EU">🇪🇺 Europe</button>
+    <button class="btn" data-filter="EM">🌏 Émergents</button>
+  </div>
+  <span class="controls-label" style="margin-left:16px">SECTEUR :</span>
+  <div class="btn-group" id="sector-filters">
+    <button class="btn active" data-sector="all">Tous</button>
+    <button class="btn" data-sector="AI">IA</button>
+    <button class="btn" data-sector="Semi">Semi.</button>
+    <button class="btn" data-sector="Biotech">Biotech</button>
+    <button class="btn" data-sector="Fintech">Fintech</button>
+    <button class="btn" data-sector="Defense">Défense</button>
+    <button class="btn" data-sector="Cloud">Cloud</button>
+  </div>
+  <select class="sort-select" id="sort-select">
+    <option value="upside">Trier : Upside ↓</option>
+    <option value="growth">Trier : Croissance ↓</option>
+    <option value="risk">Trier : Risque ↓</option>
+    <option value="price">Trier : Prix ↑</option>
+  </select>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>⚠ AVERTISSEMENT :</strong> Ce dashboard est fourni à titre informatif uniquement.<br>
+  Les données sont issues de sources publiques (Motley Fool, Morningstar, MarketBeat, Insider Monkey, Yahoo Finance).<br>
+  Investir comporte des risques de perte en capital. Consultez un conseiller financier avant tout investissement.<br>
+  Données estimées — Mai 2026
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const STOCKS = [
+  {
+    ticker: "SERV", name: "Serve Robotics", market: "US", sector: "AI",
+    price: 8.49, change52w: +312, priceTarget: 22,
+    revenueGrowth: 400, eps: -0.18, marketCap: "310M",
+    risk: 9, potential: 92,
+    upside: 159,
+    description: "Robots de livraison autonomes déployés avec Uber Eats & DoorDash. L'entreprise vise 2 000 robots actifs fin 2026 avec une multiplication par 10 des revenus.",
+    catalyst: "Contrat Uber Eats élargi, expansion vers 5 nouvelles villes US, levée de fonds prévue Q3 2026.",
+    projections: [
+      {year:"2025",rev:"$4.2M",eps:"-$0.18",growth:"+400%"},
+      {year:"2026E",rev:"$42M",eps:"-$0.08",growth:"+900%"},
+      {year:"2027E",rev:"$120M",eps:"+$0.12",growth:"+185%"},
+    ],
+    exchange: "NASDAQ", founded: 2021, hq: "San Francisco, CA",
+    tags: ["IA", "Robotique", "Livraison autonome", "Uber Eats"],
+  },
+  {
+    ticker: "RCAT", name: "Red Cat Holdings", market: "US", sector: "Defense",
+    price: 11.40, change52w: +284, priceTarget: 20,
+    revenueGrowth: 1985, eps: -0.12, marketCap: "420M",
+    risk: 9, potential: 95,
+    upside: 75,
+    description: "Fabricant du drone Black Widow pour le programme SRR (Short Range Reconnaissance) de l'US Army. Contrats gouvernementaux fermes et livrés.",
+    catalyst: "Extension contrat DoD 2026, nouveau drone Squad X, expansion vers l'OTAN.",
+    projections: [
+      {year:"2025",rev:"$18M",eps:"-$0.12",growth:"+1985%"},
+      {year:"2026E",rev:"$65M",eps:"-$0.02",growth:"+261%"},
+      {year:"2027E",rev:"$140M",eps:"+$0.18",growth:"+115%"},
+    ],
+    exchange: "NASDAQ", founded: 2016, hq: "Las Vegas, NV",
+    tags: ["Drones militaires", "Défense", "US Army", "SRR"],
+  },
+  {
+    ticker: "ONDS", name: "Ondas Holdings", market: "US", sector: "AI",
+    price: 3.15, change52w: +189, priceTarget: 9.50,
+    revenueGrowth: 629, eps: -0.35, marketCap: "185M",
+    risk: 9, potential: 88,
+    upside: 202,
+    description: "Systèmes autonomes IA en partenariat avec Palantir. Drones industriels & ferroviaires. Guidage 2026 à 375M$ de revenus.",
+    catalyst: "Partenariat Palantir IA, contrats ferroviaires Class I, expansion drone industriel.",
+    projections: [
+      {year:"2025",rev:"$31M",eps:"-$0.35",growth:"+629%"},
+      {year:"2026E",rev:"$375M",eps:"-$0.05",growth:"+1110%"},
+      {year:"2027E",rev:"$620M",eps:"+$0.22",growth:"+65%"},
+    ],
+    exchange: "NASDAQ", founded: 2006, hq: "Wakefield, MA",
+    tags: ["IA", "Drones industriels", "Palantir", "Ferroviaire"],
+  },
+  {
+    ticker: "CRWV", name: "CoreWeave", market: "US", sector: "Cloud",
+    price: 52.80, change52w: +185, priceTarget: 95,
+    revenueGrowth: 490, eps: -1.20, marketCap: "14B",
+    risk: 8, potential: 90,
+    upside: 80,
+    description: "Infrastructure cloud GPU spécialisée IA. Revenus passés de 16M$ à 5.1B$ en 3 ans. Clients : Microsoft, NVIDIA, Meta.",
+    catalyst: "IPO récente, expansion datacenter IA, contrats hyperscalers.",
+    projections: [
+      {year:"2025",rev:"$5.1B",eps:"-$1.20",growth:"+490%"},
+      {year:"2026E",rev:"$9.8B",eps:"-$0.40",growth:"+92%"},
+      {year:"2027E",rev:"$15B",eps:"+$1.80",growth:"+53%"},
+    ],
+    exchange: "NASDAQ", founded: 2017, hq: "Roseland, NJ",
+    tags: ["Cloud GPU", "IA Infrastructure", "NVIDIA", "Datacenter"],
+  },
+  {
+    ticker: "PLTR", name: "Palantir Technologies", market: "US", sector: "AI",
+    price: 121.50, change52w: +112, priceTarget: 203,
+    revenueGrowth: 70, eps: 0.14, marketCap: "272B",
+    risk: 7, potential: 85,
+    upside: 67,
+    description: "Plateforme IA et data analytics. Croissance US commercial +137% Q4 2025. Gouvernements + entreprises Fortune 500.",
+    catalyst: "AIP (Artificial Intelligence Platform) accélération commerciale, contrats gouvernement américain.",
+    projections: [
+      {year:"2025",rev:"$2.87B",eps:"$0.14",growth:"+70%"},
+      {year:"2026E",rev:"$4.63B",eps:"$0.24",growth:"+61%"},
+      {year:"2027E",rev:"$6.5B",eps:"$0.42",growth:"+40%"},
+    ],
+    exchange: "NYSE", founded: 2003, hq: "Denver, CO",
+    tags: ["IA", "Data Analytics", "Gouvernement", "AIP"],
+  },
+  {
+    ticker: "ABSI", name: "Absci Corporation", market: "US", sector: "Biotech",
+    price: 6.20, change52w: +145, priceTarget: 18,
+    revenueGrowth: 85, eps: -0.55, marketCap: "580M",
+    risk: 9, potential: 87,
+    upside: 190,
+    description: "Conception de médicaments par IA (Drug Design IA). Génère des molécules thérapeutiques via deep learning. Pipeline interne en accélération.",
+    catalyst: "Partenariats pharma majeurs, pipeline IA thérapeutique Q3 2026, levée 150M$.",
+    projections: [
+      {year:"2025",rev:"$22M",eps:"-$0.55",growth:"+85%"},
+      {year:"2026E",rev:"$60M",eps:"-$0.25",growth:"+172%"},
+      {year:"2027E",rev:"$180M",eps:"+$0.10",growth:"+200%"},
+    ],
+    exchange: "NASDAQ", founded: 2017, hq: "Portland, OR",
+    tags: ["Drug Design IA", "Biotechnologie", "Deep Learning", "Pipeline"],
+  },
+  {
+    ticker: "AUTL", name: "Autolus Therapeutics", market: "US", sector: "Biotech",
+    price: 4.85, change52w: +220, priceTarget: 14,
+    revenueGrowth: 310, eps: -0.82, marketCap: "640M",
+    risk: 9, potential: 86,
+    upside: 188,
+    description: "Thérapie cellulaire CAR-T (AUCATZYL) approuvée FDA pour leucémie. Revenus 2025 : 74.3M$. Lancement commercial US + EU.",
+    catalyst: "Expansion indications CAR-T, approbation EU EMA, pipeline ALL/DLBCL.",
+    projections: [
+      {year:"2025",rev:"$74.3M",eps:"-$0.82",growth:"+310%"},
+      {year:"2026E",rev:"$210M",eps:"-$0.30",growth:"+182%"},
+      {year:"2027E",rev:"$480M",eps:"+$0.50",growth:"+129%"},
+    ],
+    exchange: "NASDAQ", founded: 2014, hq: "London / Rockville MD",
+    tags: ["CAR-T", "Oncologie", "FDA approuvé", "Leucémie"],
+  },
+  {
+    ticker: "SKYT", name: "SkyWater Technology", market: "US", sector: "Semi",
+    price: 14.90, change52w: +290, priceTarget: 32,
+    revenueGrowth: 58, eps: -0.28, marketCap: "890M",
+    risk: 8, potential: 83,
+    upside: 115,
+    description: "Fonderie semiconducteurs quantiques. Revenus records de clients quantiques. +27% puis +31% après Q3 2025. Partenaire du programme CHIPS Act.",
+    catalyst: "Contrats quantum computing, CHIPS Act funding, expansion Tampa fab.",
+    projections: [
+      {year:"2025",rev:"$310M",eps:"-$0.28",growth:"+58%"},
+      {year:"2026E",rev:"$490M",eps:"+$0.05",growth:"+58%"},
+      {year:"2027E",rev:"$720M",eps:"+$0.45",growth:"+47%"},
+    ],
+    exchange: "NASDAQ", founded: 2017, hq: "Bloomington, MN",
+    tags: ["Quantum", "Fonderie", "CHIPS Act", "Semi-conducteurs"],
+  },
+  {
+    ticker: "ACMR", name: "ACM Research", market: "US", sector: "Semi",
+    price: 17.80, change52w: +95, priceTarget: 38,
+    revenueGrowth: 42, eps: 0.88, marketCap: "1.1B",
+    risk: 7, potential: 80,
+    upside: 113,
+    description: "Équipement de nettoyage semiconducteurs. Forte présence Chine & Corée. Bénéficiaire des investissements IA et fabrication avancée.",
+    catalyst: "Expansion SAPS pour chips 2nm, nouveaux clients Corée du Sud.",
+    projections: [
+      {year:"2025",rev:"$680M",eps:"$0.88",growth:"+42%"},
+      {year:"2026E",rev:"$960M",eps:"$1.45",growth:"+41%"},
+      {year:"2027E",rev:"$1.28B",eps:"$2.10",growth:"+33%"},
+    ],
+    exchange: "NASDAQ", founded: 1998, hq: "Fremont, CA",
+    tags: ["Semi-conducteurs", "Équipement", "Nettoyage", "IA chips"],
+  },
+  {
+    ticker: "AXTI", name: "AXT Inc.", market: "US", sector: "Semi",
+    price: 5.80, change52w: +68, priceTarget: 10,
+    revenueGrowth: 30, eps: -0.12, marketCap: "195M",
+    risk: 7, potential: 78,
+    upside: 72,
+    description: "Substrats semiconducteurs haute performance (InP, GaAs). Guidage +30% ventes 2026. Composants essentiels pour datacenters IA.",
+    catalyst: "Demande InP pour transceivers optiques IA, expansion capacité Chine.",
+    projections: [
+      {year:"2025",rev:"$92M",eps:"-$0.12",growth:"+30%"},
+      {year:"2026E",rev:"$120M",eps:"$0.05",growth:"+30%"},
+      {year:"2027E",rev:"$160M",eps:"$0.18",growth:"+33%"},
+    ],
+    exchange: "NASDAQ", founded: 1986, hq: "Fremont, CA",
+    tags: ["Substrats", "InP", "GaAs", "Optique IA"],
+  },
+  {
+    ticker: "ALIT", name: "Alight Inc.", market: "US", sector: "Cloud",
+    price: 7.90, change52w: +28, priceTarget: 14,
+    revenueGrowth: 12, eps: 0.22, marketCap: "2.4B",
+    risk: 6, potential: 72,
+    upside: 77,
+    description: "SaaS RH cloud (Human Capital Management). Valorisation très décotée avec dividende 5.6%. Transition vers l'IA RH accélérée.",
+    catalyst: "Intégration IA dans plateforme BenefitPoint, réduction coûts opérationnels.",
+    projections: [
+      {year:"2025",rev:"$3.5B",eps:"$0.22",growth:"+12%"},
+      {year:"2026E",rev:"$3.9B",eps:"$0.38",growth:"+11%"},
+      {year:"2027E",rev:"$4.3B",eps:"$0.55",growth:"+10%"},
+    ],
+    exchange: "NYSE", founded: 2017, hq: "Lincolnshire, IL",
+    tags: ["SaaS", "RH Cloud", "Dividende", "IA Enterprise"],
+  },
+  {
+    ticker: "NKTR", name: "Nektar Therapeutics", market: "US", sector: "Biotech",
+    price: 1.85, change52w: +14608, priceTarget: 8,
+    revenueGrowth: 220, eps: -0.45, marketCap: "320M",
+    risk: 10, potential: 99,
+    upside: 332,
+    description: "Biotech pipeline immunologie. NKTR-358 (lupus/autoimmune) en phase III. Potentiel multiplicateur si résultats positifs.",
+    catalyst: "Résultats Phase III NKTR-358 H2 2026, partenariat potentiel BigPharma.",
+    projections: [
+      {year:"2025",rev:"$48M",eps:"-$0.45",growth:"+220%"},
+      {year:"2026E",rev:"$85M",eps:"-$0.20",growth:"+77%"},
+      {year:"2027E",rev:"$420M",eps:"+$0.85",growth:"+394%"},
+    ],
+    exchange: "NASDAQ", founded: 1990, hq: "San Francisco, CA",
+    tags: ["Immunologie", "Phase III", "Lupus", "BigPharma potentiel"],
+  },
+  {
+    ticker: "ABUS", name: "Arbutus Biopharma", market: "US", sector: "Biotech",
+    price: 2.40, change52w: +82, priceTarget: 7,
+    revenueGrowth: 45, eps: -0.28, marketCap: "380M",
+    risk: 9, potential: 85,
+    upside: 192,
+    description: "Traitement Hépatite B chronique (HBV). Trésorerie 91.5M$, pertes réduites de 29M$ en 2025. Pipeline ARN ciblé.",
+    catalyst: "Données AB-729 Phase 2 HBV, collaboration potentielle Roche/Gilead.",
+    projections: [
+      {year:"2025",rev:"$12M",eps:"-$0.28",growth:"+45%"},
+      {year:"2026E",rev:"$28M",eps:"-$0.18",growth:"+133%"},
+      {year:"2027E",rev:"$95M",eps:"+$0.15",growth:"+239%"},
+    ],
+    exchange: "NASDAQ", founded: 1991, hq: "Burnaby, BC (Canada/US listed)",
+    tags: ["HBV", "Hépatite B", "ARN thérapeutique", "Phase 2"],
+  },
+  // ── EUROPE ──────────────────────────────────────────────────────────────────
+  {
+    ticker: "ASML", name: "ASML Holding", market: "EU", sector: "Semi",
+    price: 782.00, change52w: +18, priceTarget: 1050,
+    revenueGrowth: 24, eps: 22.40, marketCap: "310B",
+    risk: 5, potential: 88,
+    upside: 34,
+    description: "Monopole mondial des machines EUV (lithographie). Indispensable pour les puces IA 2nm. Clients : TSMC, Samsung, Intel.",
+    catalyst: "Commandes record High-NA EUV, croissance IA chips 2nm/1nm.",
+    projections: [
+      {year:"2025",rev:"€32.5B",eps:"€22.40",growth:"+24%"},
+      {year:"2026E",rev:"€40B",eps:"€28",growth:"+23%"},
+      {year:"2027E",rev:"€50B",eps:"€36",growth:"+25%"},
+    ],
+    exchange: "AMS / NASDAQ", founded: 1984, hq: "Veldhoven, NL",
+    tags: ["EUV", "Monopole", "Lithographie", "IA chips"],
+  },
+  {
+    ticker: "NVO", name: "Novo Nordisk", market: "EU", sector: "Biotech",
+    price: 74.50, change52w: -22, priceTarget: 115,
+    revenueGrowth: 22, eps: 3.85, marketCap: "335B",
+    risk: 5, potential: 86,
+    upside: 54,
+    description: "Leader mondial GLP-1 (Ozempic/Wegovy). Marché obésité estimé 100B$+ d'ici 2030. Décote actuelle par rapport à valeur intrinsèque.",
+    catalyst: "CagriSema Phase III, expansion Wegovy US/Chine, nouveau pipeline GLP-1.",
+    projections: [
+      {year:"2025",rev:"DKK 400B",eps:"DKK 26.5",growth:"+22%"},
+      {year:"2026E",rev:"DKK 490B",eps:"DKK 32",growth:"+22%"},
+      {year:"2027E",rev:"DKK 610B",eps:"DKK 42",growth:"+24%"},
+    ],
+    exchange: "NYSE (ADR) / CPH", founded: 1923, hq: "Bagsværd, Danemark",
+    tags: ["GLP-1", "Obésité", "Ozempic", "Wegovy"],
+  },
+  {
+    ticker: "ADYEN", name: "Adyen NV", market: "EU", sector: "Fintech",
+    price: 1485.00, change52w: +42, priceTarget: 2200,
+    revenueGrowth: 28, eps: 18.20, marketCap: "46B",
+    risk: 6, potential: 82,
+    upside: 48,
+    description: "Infrastructure paiements unifiée (online + POS). Clients : Netflix, Spotify, McDonald's. Pénétration forte US et Asie-Pacifique.",
+    catalyst: "Croissance plateforme unifiée, expansion APAC, nouveaux clients retail US.",
+    projections: [
+      {year:"2025",rev:"€2.0B",eps:"€18.20",growth:"+28%"},
+      {year:"2026E",rev:"€2.6B",eps:"€24",growth:"+30%"},
+      {year:"2027E",rev:"€3.4B",eps:"€31",growth:"+30%"},
+    ],
+    exchange: "AMS (Euronext)", founded: 2006, hq: "Amsterdam, NL",
+    tags: ["Paiements", "Fintech", "Unified Commerce", "POS"],
+  },
+  {
+    ticker: "SAP", name: "SAP SE", market: "EU", sector: "Cloud",
+    price: 248.00, change52w: +35, priceTarget: 340,
+    revenueGrowth: 18, eps: 5.80, marketCap: "303B",
+    risk: 4, potential: 78,
+    upside: 37,
+    description: "Leader ERP mondial en transition cloud+IA. Business AI intégré dans S/4HANA Cloud. Migration cloud accélère les marges.",
+    catalyst: "Adoption IA générative Business AI, migration S/4HANA, partenariat Microsoft.",
+    projections: [
+      {year:"2025",rev:"€38B",eps:"€5.80",growth:"+18%"},
+      {year:"2026E",rev:"€45B",eps:"€7.20",growth:"+18%"},
+      {year:"2027E",rev:"€53B",eps:"€9.10",growth:"+18%"},
+    ],
+    exchange: "NYSE (ADR) / XETRA", founded: 1972, hq: "Walldorf, Allemagne",
+    tags: ["ERP", "Cloud", "Business AI", "Enterprise"],
+  },
+  {
+    ticker: "ASMO", name: "Asmodee Group", market: "EU", sector: "AI",
+    price: 62.00, change52w: +48, priceTarget: 95,
+    revenueGrowth: 37.6, eps: 1.20, marketCap: "3.8B",
+    risk: 7, potential: 80,
+    upside: 53,
+    description: "Leader mondial jeux de société (Catan, Ticket to Ride). Croissance digitale +37.6%/an. Très sous-évalué vs flux de trésorerie. Coté Stockholm.",
+    catalyst: "Expansion jeux digitaux, licences Hollywood, marchés Asie-Pacifique.",
+    projections: [
+      {year:"2025",rev:"€3.1B",eps:"€1.20",growth:"+37.6%"},
+      {year:"2026E",rev:"€4.3B",eps:"€1.85",growth:"+38%"},
+      {year:"2027E",rev:"€5.9B",eps:"€2.80",growth:"+37%"},
+    ],
+    exchange: "Nasdaq Stockholm", founded: 1995, hq: "Issy-les-Moulineaux, France",
+    tags: ["Jeux de société", "Digital Gaming", "Licences", "Divertissement"],
+  },
+  // ── EMERGING MARKETS ─────────────────────────────────────────────────────────
+  {
+    ticker: "MELI", name: "MercadoLibre", market: "EM", sector: "Fintech",
+    price: 2145.00, change52w: +55, priceTarget: 3200,
+    revenueGrowth: 39, eps: 12.80, marketCap: "108B",
+    risk: 7, potential: 88,
+    upside: 49,
+    description: "Amazon + PayPal d'Amérique Latine. E-commerce + Mercado Pago (fintech). Volume paiements +41% Q3 2025. 18 pays couverts.",
+    catalyst: "Expansion crédit BNPL, Mercado Ads, logistique last-mile.",
+    projections: [
+      {year:"2025",rev:"$22B",eps:"$12.80",growth:"+39%"},
+      {year:"2026E",rev:"$30B",eps:"$18",growth:"+36%"},
+      {year:"2027E",rev:"$40B",eps:"$26",growth:"+33%"},
+    ],
+    exchange: "NASDAQ", founded: 1999, hq: "Montevideo, Uruguay",
+    tags: ["E-commerce", "Fintech", "LatAm", "Mercado Pago"],
+  },
+  {
+    ticker: "TSM", name: "Taiwan Semiconductor", market: "EM", sector: "Semi",
+    price: 192.00, change52w: +32, priceTarget: 260,
+    revenueGrowth: 38, eps: 8.95, marketCap: "995B",
+    risk: 6, potential: 85,
+    upside: 35,
+    description: "Fonderie N°1 mondiale (60% part marché). Seul fabricant N2/A14 chips. Fournisseur Apple, NVIDIA, AMD. Infrastructure critique IA.",
+    catalyst: "Usine Arizona opérationnelle, N2 2026, demande chips IA explosive.",
+    projections: [
+      {year:"2025",rev:"$90B",eps:"$8.95",growth:"+38%"},
+      {year:"2026E",rev:"$124B",eps:"$12.20",growth:"+37%"},
+      {year:"2027E",rev:"$158B",eps:"$15.80",growth:"+27%"},
+    ],
+    exchange: "NYSE (ADR) / TWSE", founded: 1987, hq: "Hsinchu, Taiwan",
+    tags: ["Fonderie", "N2", "IA Chips", "Apple NVIDIA"],
+  },
+  {
+    ticker: "IBN", name: "ICICI Bank", market: "EM", sector: "Fintech",
+    price: 28.90, change52w: +42, priceTarget: 45,
+    revenueGrowth: 18, eps: 1.82, marketCap: "105B",
+    risk: 5, potential: 80,
+    upside: 56,
+    description: "2ème banque privée d'Inde. Croissance forte portée par middle class indienne en expansion. Digital banking leader en Inde.",
+    catalyst: "Inclusion financière Inde, digitalisation UPI, expansion SME lending.",
+    projections: [
+      {year:"2025",rev:"₹2.4T",eps:"₹152",growth:"+18%"},
+      {year:"2026E",rev:"₹2.85T",eps:"₹185",growth:"+19%"},
+      {year:"2027E",rev:"₹3.4T",eps:"₹225",growth:"+19%"},
+    ],
+    exchange: "NYSE (ADR) / BSE", founded: 1994, hq: "Mumbai, Inde",
+    tags: ["Banque", "Inde", "Digital Banking", "UPI"],
+  },
+  {
+    ticker: "HDB", name: "HDFC Bank", market: "EM", sector: "Fintech",
+    price: 68.50, change52w: +28, priceTarget: 95,
+    revenueGrowth: 14, eps: 3.20, marketCap: "185B",
+    risk: 4, potential: 78,
+    upside: 39,
+    description: "1ère banque privée d'Inde par actifs. Croissance NIM stable, qualité bilan excellente. Fusion HDFC Ltd complétée.",
+    catalyst: "Croissance retail loans, HDFC Life expansion, digitalisation rurale.",
+    projections: [
+      {year:"2025",rev:"₹3.8T",eps:"₹260",growth:"+14%"},
+      {year:"2026E",rev:"₹4.3T",eps:"₹300",growth:"+13%"},
+      {year:"2027E",rev:"₹4.9T",eps:"₹345",growth:"+14%"},
+    ],
+    exchange: "NYSE (ADR) / BSE", founded: 1994, hq: "Mumbai, Inde",
+    tags: ["Banque", "Inde", "Retail Banking", "NIM"],
+  },
+  {
+    ticker: "3690.HK", name: "Meituan", market: "EM", sector: "AI",
+    price: 168.00, change52w: +78, priceTarget: 280,
+    revenueGrowth: 22, eps: 5.40, marketCap: "103B",
+    risk: 8, potential: 84,
+    upside: 67,
+    description: "Super-app N°1 Chine : livraison, voyage, services locaux. Leader livraison avec 75%+ de part de marché Chine. Expansion drone delivery.",
+    catalyst: "Drones livraison Shenzhen, expansion Hong Kong, grocery delivery croissance.",
+    projections: [
+      {year:"2025",rev:"RMB 367B",eps:"RMB 38",growth:"+22%"},
+      {year:"2026E",rev:"RMB 448B",eps:"RMB 52",growth:"+22%"},
+      {year:"2027E",rev:"RMB 546B",eps:"RMB 68",growth:"+22%"},
+    ],
+    exchange: "HKEX", founded: 2010, hq: "Beijing, Chine",
+    tags: ["Super-app", "Livraison", "Chine", "Drone delivery"],
+  },
+];
+
+// ── RISK COLOR ──
+function riskColor(r) {
+  if (r >= 9) return '#ff3355';
+  if (r >= 7) return '#ff8800';
+  if (r >= 5) return '#ffd700';
+  return '#00ff88';
+}
+
+// ── TICKER TAPE ──
+function buildTape() {
+  const tape = document.getElementById('tape');
+  let html = '';
+  const items = [...STOCKS, ...STOCKS]; // double pour boucle
+  items.forEach(s => {
+    const cls = s.change52w >= 0 ? 'up' : 'dn';
+    const sign = s.change52w >= 0 ? '▲' : '▼';
+    html += `<span class="ticker-item"><span class="sym">${s.ticker}</span> <span class="${cls}">${sign}${Math.abs(s.change52w)}% (52W)</span></span>`;
+  });
+  tape.innerHTML = html;
+}
+
+// ── BUILD CARD ──
+function buildCard(s) {
+  const mktClass = s.market === 'EU' ? 'eu-market' : s.market === 'EM' ? 'em-market' : 'us-market';
+  const mktBadgeClass = s.market === 'EU' ? 'eu' : s.market === 'EM' ? 'em' : '';
+  const mktLabel = s.market === 'EU' ? '🇪🇺 Europe' : s.market === 'EM' ? '🌏 Émergents' : '🇺🇸 US';
+  const chg = s.change52w;
+  const chgClass = chg >= 0 ? 'up' : 'dn';
+  const chgSign = chg >= 0 ? '▲' : '▼';
+  const riskW = (s.risk / 10) * 100;
+  const rc = riskColor(s.risk);
+  const priceStr = s.price >= 1000 ? s.price.toLocaleString('fr-FR') : s.price.toFixed(2);
+
+  return `
+  <div class="card ${mktClass}"
+       data-market="${s.market}"
+       data-sector="${s.sector}"
+       data-upside="${s.upside}"
+       data-growth="${s.revenueGrowth}"
+       data-risk="${s.risk}"
+       data-price="${s.price}"
+       onclick="openModal('${s.ticker}')">
+
+    <div class="card-header">
+      <div>
+        <div class="card-ticker">${s.ticker}</div>
+        <div class="card-name">${s.name}</div>
+      </div>
+      <div class="card-price-block">
+        <div class="card-price">$${priceStr}</div>
+        <div class="card-change ${chgClass}">${chgSign} ${Math.abs(chg)}% 52W</div>
+      </div>
+    </div>
+
+    <div class="card-badges">
+      <span class="badge badge-sector">${s.sector}</span>
+      <span class="badge badge-market ${mktBadgeClass}">${mktLabel}</span>
+      ${s.tags.slice(0,2).map(t => `<span class="badge" style="background:#1a1a0d;color:#ffd700;border:1px solid #404000">${t}</span>`).join('')}
+    </div>
+
+    <div class="risk-row">
+      <span class="risk-label">RISQUE</span>
+      <div class="risk-bar-outer">
+        <div class="risk-bar-inner" style="width:${riskW}%;background:${rc}"></div>
+      </div>
+      <span class="risk-val" style="color:${rc}">${s.risk}/10</span>
+    </div>
+
+    <div class="potential-row">
+      <span class="potential-label">UPSIDE</span>
+      <div class="pot-bar-outer">
+        <div class="pot-bar-inner" style="width:${Math.min(s.upside/4,100)}%"></div>
+      </div>
+      <span class="pot-val">+${s.upside}%</span>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">Croissance Rev.</div>
+        <div class="metric-value green">+${s.revenueGrowth}%</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Mkt Cap</div>
+        <div class="metric-value white">${s.marketCap}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">EPS (TTM)</div>
+        <div class="metric-value ${s.eps >= 0 ? 'green' : 'red'}">${s.eps >= 0 ? '+' : ''}$${s.eps}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Bourse</div>
+        <div class="metric-value blue">${s.exchange.split('/')[0].trim()}</div>
+      </div>
+    </div>
+
+    <div class="catalyst">
+      <strong>CATALYSEUR :</strong> ${s.catalyst}
+    </div>
+
+    <div class="target-row">
+      <div>
+        <div class="target-label">OBJECTIF ANALYSTE</div>
+        <div class="target-price">$${typeof s.priceTarget === 'number' ? s.priceTarget.toLocaleString('fr-FR') : s.priceTarget}</div>
+      </div>
+      <div class="target-upside">UPSIDE ▲ ${s.upside}%</div>
+    </div>
+  </div>`;
+}
+
+// ── BUILD MODAL ──
+function openModal(ticker) {
+  const s = STOCKS.find(x => x.ticker === ticker);
+  if (!s) return;
+  const mktLabel = s.market === 'EU' ? '🇪🇺 Europe' : s.market === 'EM' ? '🌏 Émergents' : '🇺🇸 US';
+  const rc = riskColor(s.risk);
+  const priceStr = s.price >= 1000 ? s.price.toLocaleString('fr-FR') : s.price.toFixed(2);
+
+  const projRows = s.projections.map(p =>
+    `<tr>
+      <td style="color:#888">${p.year}</td>
+      <td style="color:#fff">${p.rev}</td>
+      <td style="color:${parseFloat(p.eps) >= 0 ? '#00ff88' : '#ff3355'}">${p.eps}</td>
+      <td style="color:#ffd700">${p.growth}</td>
+    </tr>`
+  ).join('');
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-ticker">${s.ticker}</div>
+    <div class="modal-name">${s.name} &nbsp;·&nbsp; ${mktLabel} &nbsp;·&nbsp; ${s.sector}</div>
+
+    <div class="modal-section-title">Informations Générales</div>
+    <div class="modal-grid">
+      <div class="modal-metric">
+        <div class="modal-metric-label">Prix actuel</div>
+        <div class="modal-metric-value" style="color:#fff">$${priceStr}</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Objectif analyste</div>
+        <div class="modal-metric-value" style="color:#00ff88">$${s.priceTarget.toLocaleString('fr-FR')}</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Upside potentiel</div>
+        <div class="modal-metric-value" style="color:#ffd700">+${s.upside}%</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Market Cap</div>
+        <div class="modal-metric-value" style="color:#fff">${s.marketCap}</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Risque</div>
+        <div class="modal-metric-value" style="color:${rc}">${s.risk} / 10</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">EPS (TTM)</div>
+        <div class="modal-metric-value" style="color:${s.eps >= 0 ? '#00ff88' : '#ff3355'}">${s.eps >= 0 ? '+' : ''}$${s.eps}</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Bourse</div>
+        <div class="modal-metric-value" style="color:#00aaff">${s.exchange}</div>
+      </div>
+      <div class="modal-metric">
+        <div class="modal-metric-label">Fondé en</div>
+        <div class="modal-metric-value" style="color:#888">${s.founded}</div>
+      </div>
+    </div>
+
+    <div class="modal-section-title">Siège Social</div>
+    <div class="modal-text" style="margin-bottom:14px">${s.hq}</div>
+
+    <div class="modal-section-title">Description</div>
+    <div class="modal-text" style="margin-bottom:14px">${s.description}</div>
+
+    <div class="modal-section-title">Catalyseurs de Croissance</div>
+    <div class="modal-text" style="margin-bottom:14px;color:#00ff88">${s.catalyst}</div>
+
+    <div class="modal-section-title">Tags / Thèmes</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+      ${s.tags.map(t => `<span class="badge" style="background:#1a1a0d;color:#ffd700;border:1px solid #404000">${t}</span>`).join('')}
+    </div>
+
+    <div class="modal-section-title">Projections Financières</div>
+    <table class="proj-table">
+      <thead>
+        <tr>
+          <th>Année</th>
+          <th>Revenus</th>
+          <th>EPS</th>
+          <th>Croissance</th>
+        </tr>
+      </thead>
+      <tbody>${projRows}</tbody>
+    </table>
+
+    <div style="margin-top:18px;padding:10px;background:#0a0a0a;border:1px solid #222;font-size:10px;color:#555;line-height:1.8">
+      ⚠ Les projections sont des estimations d'analystes. Elles ne constituent pas un conseil en investissement.<br>
+      Sources : Morningstar, MarketBeat, Insider Monkey, Yahoo Finance, Motley Fool — Mai 2026.
+    </div>
+  `;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── RENDER ──
+function renderGrid(filterMarket = 'all', filterSector = 'all', sortBy = 'upside') {
+  let stocks = STOCKS.filter(s => {
+    const mOk = filterMarket === 'all' || s.market === filterMarket;
+    const sOk = filterSector === 'all' || s.sector === filterSector;
+    return mOk && sOk;
+  });
+
+  stocks.sort((a, b) => {
+    if (sortBy === 'upside')  return b.upside - a.upside;
+    if (sortBy === 'growth')  return b.revenueGrowth - a.revenueGrowth;
+    if (sortBy === 'risk')    return b.risk - a.risk;
+    if (sortBy === 'price')   return a.price - b.price;
+    return 0;
+  });
+
+  document.getElementById('grid').innerHTML = stocks.map(buildCard).join('');
+}
+
+// ── FILTERS ──
+let activeMarket = 'all';
+let activeSector = 'all';
+
+document.getElementById('market-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn) return;
+  activeMarket = btn.dataset.filter;
+  document.querySelectorAll('#market-filters .btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(activeMarket, activeSector, document.getElementById('sort-select').value);
+});
+
+document.getElementById('sector-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn) return;
+  activeSector = btn.dataset.sector;
+  document.querySelectorAll('#sector-filters .btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(activeMarket, activeSector, document.getElementById('sort-select').value);
+});
+
+document.getElementById('sort-select').addEventListener('change', e => {
+  renderGrid(activeMarket, activeSector, e.target.value);
+});
+
+// ── CLOCK ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('fr-FR');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── INIT ──
+buildTape();
+renderGrid();
+</script>
+</body>
+</html>
