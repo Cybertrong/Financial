@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TOP PERFORMERS — Stocks &lt;$10 · Dashboard 2026</title>
+  <title>TOP PERFORMERS — Stocks &lt;$15 · Dashboard 2026</title>
   <style>
     :root {
       --bg:      #000000;
@@ -244,7 +244,7 @@
     <div class="logo-icon">$</div>
     <div>
       <div class="logo-text">TOP PERFORMERS</div>
-      <div class="logo-sub">25 ACTIONS &lt; $10 · COURS LIVE TRADINGVIEW · MAI 2026</div>
+      <div class="logo-sub">19 ACTIONS &lt; $15 · COURS LIVE TRADINGVIEW · MAI 2026</div>
     </div>
   </div>
   <div class="header-meta">
@@ -266,14 +266,10 @@
         {"proName":"NYSE:BBAI","title":"BBAI"},
         {"proName":"NASDAQ:SERV","title":"SERV"},
         {"proName":"NASDAQ:ONDS","title":"ONDS"},
-        {"proName":"NASDAQ:RKLB","title":"RKLB"},
         {"proName":"NASDAQ:RXRX","title":"RXRX"},
         {"proName":"NASDAQ:ABSI","title":"ABSI"},
         {"proName":"NASDAQ:AUTL","title":"AUTL"},
         {"proName":"NYSE:KULR","title":"KULR"},
-        {"proName":"NASDAQ:ARQQ","title":"ARQQ"},
-        {"proName":"NASDAQ:DAVE","title":"DAVE"},
-        {"proName":"NASDAQ:NKTR","title":"NKTR"},
         {"proName":"NASDAQ:ABUS","title":"ABUS"},
         {"proName":"NASDAQ:POET","title":"POET"},
         {"proName":"NYSE:NOK","title":"NOK"},
@@ -281,9 +277,7 @@
         {"proName":"NASDAQ:LAES","title":"LAES"},
         {"proName":"NYSE:SMWB","title":"SMWB"},
         {"proName":"NASDAQ:NNDM","title":"NNDM"},
-        {"proName":"NASDAQ:ACMR","title":"ACMR"},
         {"proName":"NYSE:CANG","title":"CANG"},
-        {"proName":"NASDAQ:KC","title":"KC"},
         {"proName":"NASDAQ:RVSN","title":"RVSN"},
         {"proName":"NASDAQ:ANGH","title":"ANGH"}
       ],
@@ -301,27 +295,27 @@
 <div class="stats-bar">
   <div class="stat-box">
     <div class="stat-label">Actions sélectionnées</div>
-    <div class="stat-value green">25</div>
+    <div class="stat-value green">19</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Prix max</div>
-    <div class="stat-value orange">&lt; $10</div>
+    <div class="stat-value orange">&lt; $15</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Upside moyen</div>
-    <div class="stat-value yellow">+163%</div>
+    <div class="stat-value yellow">+162%</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Risque moyen</div>
-    <div class="stat-value red">8.4 / 10</div>
+    <div class="stat-value red">8.5 / 10</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Croissance moy.</div>
-    <div class="stat-value green">+127%</div>
+    <div class="stat-value green">+140%</div>
   </div>
   <div class="stat-box">
     <div class="stat-label">Secteurs</div>
-    <div class="stat-value purple">8</div>
+    <div class="stat-value purple">5</div>
   </div>
 </div>
 
@@ -342,8 +336,6 @@
     <button class="btn" data-sector="Biotech">Biotech</button>
     <button class="btn" data-sector="Fintech">Fintech</button>
     <button class="btn" data-sector="Defense">Défense</button>
-    <button class="btn" data-sector="Cloud">Cloud</button>
-    <button class="btn" data-sector="Space">Espace</button>
   </div>
   <select class="sort-select" id="sort-select">
     <option value="upside">Trier : Upside ↓</option>
@@ -440,16 +432,6 @@ const STOCKS = [
     tags:["IA Industrielle","Drones","Palantir","Ferroviaire"],
   },
   {
-    ticker:"RKLB", tvSym:"NASDAQ:RKLB", name:"Rocket Lab USA", market:"US", sector:"Space",
-    price:8.50, priceTarget:16.00, upside:88, change52w:+125,
-    revenueGrowth:78, eps:-0.38, marketCap:"$4.2B", risk:8, potential:90,
-    description:"Leader des petits lanceurs spatiaux (Electron — +60 vols réussis) + fabricant de satellites (Photon). Contrats NASA, NRO, DoD. Fusée Neutron en développement.",
-    catalyst:"Premier vol Neutron 2026-2027, contrats constellation satellite DARPA/SDA, expansion usine Virginie.",
-    projections:[{year:"2025",rev:"$420M",eps:"-$0.38",growth:"+78%"},{year:"2026E",rev:"$680M",eps:"-$0.15",growth:"+62%"},{year:"2027E",rev:"$1.1B",eps:"+$0.08",growth:"+62%"}],
-    exchange:"NASDAQ", founded:2006, hq:"Long Beach, CA",
-    tags:["Lanceur spatial","Satellite","NASA","Neutron rocket"],
-  },
-  {
     ticker:"RXRX", tvSym:"NASDAQ:RXRX", name:"Recursion Pharmaceuticals", market:"US", sector:"Biotech",
     price:5.40, priceTarget:16.00, upside:196, change52w:-35,
     revenueGrowth:65, eps:-0.85, marketCap:"$1.8B", risk:9, potential:88,
@@ -488,36 +470,6 @@ const STOCKS = [
     projections:[{year:"2025",rev:"$12M",eps:"-$0.28",growth:"+180%"},{year:"2026E",rev:"$45M",eps:"-$0.10",growth:"+275%"},{year:"2027E",rev:"$120M",eps:"+$0.15",growth:"+167%"}],
     exchange:"NYSE", founded:2018, hq:"San Diego, CA",
     tags:["Thermique","NASA","Space Force","IA Chips"],
-  },
-  {
-    ticker:"ARQQ", tvSym:"NASDAQ:ARQQ", name:"Arqit Quantum", market:"US", sector:"Cloud",
-    price:3.60, priceTarget:10.60, upside:194, change52w:+85,
-    revenueGrowth:120, eps:-0.65, marketCap:"$280M", risk:9, potential:89,
-    description:"Chiffrement quantique souverain via QuantumCloud. Protection contre attaques d'ordinateurs quantiques. Contrats UK, US gouvernement, OTAN. Standard NIST PQC adopté favorise l'adoption globale.",
-    catalyst:"Contrats OTAN cybersécurité quantique, expansion gouvernement US post-NIST PQC, hyperscalers enterprise.",
-    projections:[{year:"2025",rev:"$8M",eps:"-$0.65",growth:"+120%"},{year:"2026E",rev:"$28M",eps:"-$0.35",growth:"+250%"},{year:"2027E",rev:"$95M",eps:"-$0.08",growth:"+239%"}],
-    exchange:"NASDAQ", founded:2017, hq:"London, UK",
-    tags:["Quantum Crypto","QuantumCloud","OTAN","Post-Quantum"],
-  },
-  {
-    ticker:"DAVE", tvSym:"NASDAQ:DAVE", name:"Dave Inc.", market:"US", sector:"Fintech",
-    price:7.80, priceTarget:17.80, upside:128, change52w:+380,
-    revenueGrowth:28, eps:-0.08, marketCap:"$1.2B", risk:7, potential:80,
-    description:"Néobanque IA américaine, première fintech challenger proche de la rentabilité. 12M+ membres actifs. ExtraCash avances sans intérêts. Credit scoring IA propriétaire réduisant les défauts de 40%.",
-    catalyst:"Breakeven atteint Q1 2026, expansion banking-as-a-service B2B, amélioration AI credit scoring.",
-    projections:[{year:"2025",rev:"$340M",eps:"-$0.08",growth:"+28%"},{year:"2026E",rev:"$445M",eps:"+$0.15",growth:"+31%"},{year:"2027E",rev:"$580M",eps:"+$0.48",growth:"+30%"}],
-    exchange:"NASDAQ", founded:2016, hq:"Los Angeles, CA",
-    tags:["Néobanque IA","ExtraCash","Profitable","BaaS"],
-  },
-  {
-    ticker:"NKTR", tvSym:"NASDAQ:NKTR", name:"Nektar Therapeutics", market:"US", sector:"Biotech",
-    price:1.75, priceTarget:8.25, upside:371, change52w:+280,
-    revenueGrowth:220, eps:-0.45, marketCap:"$320M", risk:10, potential:99,
-    description:"Biotech pipeline immunologie avancée. NKTR-358 (lupus/maladies autoimmunes) en Phase III — candidat de rupture pour réguler les cellules T suppressives. Potentiel x5-x10 si résultats positifs.",
-    catalyst:"Résultats Phase III NKTR-358 H2 2026 (catalyseur binaire majeur), partenariat BigPharma potentiel 1B$+.",
-    projections:[{year:"2025",rev:"$48M",eps:"-$0.45",growth:"+220%"},{year:"2026E",rev:"$85M",eps:"-$0.20",growth:"+77%"},{year:"2027E",rev:"$420M",eps:"+$0.85",growth:"+394%"}],
-    exchange:"NASDAQ", founded:1990, hq:"San Francisco, CA",
-    tags:["Immunologie","Phase III","Lupus","BigPharma potentiel"],
   },
   {
     ticker:"ABUS", tvSym:"NASDAQ:ABUS", name:"Arbutus Biopharma", market:"US", sector:"Biotech",
@@ -594,16 +546,6 @@ const STOCKS = [
 
   // ── EMERGING MARKETS ─────────────────────────────────────────
   {
-    ticker:"ACMR", tvSym:"NASDAQ:ACMR", name:"ACM Research", market:"EM", sector:"Semi",
-    price:6.50, priceTarget:17.50, upside:169, change52w:-48,
-    revenueGrowth:42, eps:0.88, marketCap:"$1.1B", risk:7, potential:82,
-    description:"Équipements de nettoyage semiconducteurs — leader en Chine (SAPS technology). Profitable avec EPS positif. Bénéficiaire des investissements massifs en fabrication de chips IA en Asie.",
-    catalyst:"Expansion SAPS pour chips 2nm/1nm, nouveaux clients Corée du Sud, boom équipements IA fabs Chine.",
-    projections:[{year:"2025",rev:"$680M",eps:"$0.88",growth:"+42%"},{year:"2026E",rev:"$960M",eps:"$1.45",growth:"+41%"},{year:"2027E",rev:"$1.28B",eps:"$2.10",growth:"+33%"}],
-    exchange:"NASDAQ", founded:1998, hq:"Fremont, CA / Chine",
-    tags:["Semi-conducteurs","Nettoyage SAPS","Chine fabs","IA Chips"],
-  },
-  {
     ticker:"CANG", tvSym:"NYSE:CANG", name:"Cango Inc.", market:"EM", sector:"Fintech",
     price:3.60, priceTarget:9.00, upside:150, change52w:+125,
     revenueGrowth:40, eps:0.32, marketCap:"$285M", risk:8, potential:80,
@@ -612,16 +554,6 @@ const STOCKS = [
     projections:[{year:"2025",rev:"$85M",eps:"$0.32",growth:"+40%"},{year:"2026E",rev:"$140M",eps:"$0.65",growth:"+65%"},{year:"2027E",rev:"$210M",eps:"$1.10",growth:"+50%"}],
     exchange:"NYSE", founded:2010, hq:"Shanghai, Chine",
     tags:["Auto Fintech","Bitcoin Mining","Chine","Profitable"],
-  },
-  {
-    ticker:"KC", tvSym:"NASDAQ:KC", name:"Kingsoft Cloud", market:"EM", sector:"Cloud",
-    price:4.80, priceTarget:11.00, upside:129, change52w:+88,
-    revenueGrowth:35, eps:-0.18, marketCap:"$1.8B", risk:8, potential:82,
-    description:"Infrastructure cloud IA chinoise. Leader cloud gaming, entertainment et fintech en Chine. GPUs NVIDIA H800 déployés pour entraîner les LLMs chinois. Partenariat Xiaomi strategic.",
-    catalyst:"Expansion IA générative Chine, datacenter GPU H800 pour LLMs, partenariat Xiaomi, réduction pertes Q4 2026.",
-    projections:[{year:"2025",rev:"$1.1B",eps:"-$0.18",growth:"+35%"},{year:"2026E",rev:"$1.55B",eps:"-$0.05",growth:"+41%"},{year:"2027E",rev:"$2.2B",eps:"+$0.12",growth:"+42%"}],
-    exchange:"NASDAQ", founded:2012, hq:"Beijing, Chine",
-    tags:["Cloud IA","Gaming","LLM China","Xiaomi"],
   },
   {
     ticker:"RVSN", tvSym:"NASDAQ:RVSN", name:"Rail Vision", market:"EM", sector:"AI",
